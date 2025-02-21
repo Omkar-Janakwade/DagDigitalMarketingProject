@@ -1,6 +1,9 @@
 package com.demo.admin.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,13 +23,22 @@ public class User_controller {
 	private User_repo repo;
 	
 
-	@PostMapping("userlogin")
+	@PostMapping("/userlogin")
 	public ResponseEntity<?> loginUser(@RequestBody User logindata){
 		User login= repo.findByemail(logindata.getEmail());
 		if(login.getPassword().equals(logindata.getPassword()))
 				return ResponseEntity.ok(login);
 		
 		return(ResponseEntity<?>) ResponseEntity.internalServerError();
+	}
+
+	@GetMapping()
+	protected ResponseEntity<?> getAllUsers(){
+		List<User> users=repo.findAll();
+		if(users.size()>0){
+			return ResponseEntity.ok(users);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Users not present");
 	}
 	
 	

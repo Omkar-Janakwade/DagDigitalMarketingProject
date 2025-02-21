@@ -37,9 +37,10 @@ public class ServicesCont {
 	@PostMapping("/addservices")
 	@ResponseBody
 	public ResponseEntity<String> addServices(@RequestParam("tittle") String tittle,
-			@RequestParam("discription") String discription, @RequestParam("file") MultipartFile file) {
+			@RequestParam("discription") String discription, @RequestParam("type") String type,
+			@RequestParam("file") MultipartFile file) {
 		try {
-			service.addservices(tittle, discription, file);
+			service.addservices(tittle, discription, type, file);
 			return ResponseEntity.status(HttpStatus.OK).header("Content-Type", "text/plain") // Set Content-Type header
 					.body("Successfully added services details with image");
 		} catch (Exception e) {
@@ -53,13 +54,14 @@ public class ServicesCont {
 	@ResponseBody
 	public ResponseEntity<String> updateservice(@PathVariable("id") Integer id, @RequestParam("tittle") String tittle,
 			@RequestParam("discription") String discription,
+			@RequestParam("type") String type,
 			@RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
 
 		try {
-			if (file == null) {	
-				service.updateservicesWithOutFile(id, tittle, discription);
+			if (file == null) {
+				service.updateservicesWithOutFile(id, tittle,type, discription);
 			} else {
-				service.updateservice(id, tittle, discription, file);
+				service.updateservice(id, tittle, discription, type, file);
 			}
 			return ResponseEntity.status(HttpStatus.OK).header("Content-Type", "text/plain") // Set Content-Type header
 					.body("Successfully Update services details with image");

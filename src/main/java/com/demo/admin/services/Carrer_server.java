@@ -35,4 +35,13 @@ public class Carrer_server {
 		return repo.count();
 	}
 
+	public Carrer updateCarrer(Integer id, Carrer updatedCarrer) {
+        if (repo.existsById(id)) {
+            updatedCarrer.setId(id);  // Make sure the ID stays the same
+            return repo.save(updatedCarrer);
+        } else {
+            return null;
+        }
+    }
+
 }

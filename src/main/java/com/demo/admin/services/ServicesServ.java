@@ -18,12 +18,13 @@ public class ServicesServ {
 	@Autowired
 	ServicesRepo repo;
 	
-	public void addservices(String tittle, String discription, MultipartFile file) {
+	public void addservices(String tittle, String discription, String type,MultipartFile file) {
 	try {
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename()); 
 		Services services=new Services();
 		services.setTittle(tittle);
 		services.setDiscription(discription);
+		services.setType(type);
 		services.setImg(file.getBytes());
 		repo.save(services);
 	} catch (IOException e) {
@@ -48,13 +49,14 @@ public class ServicesServ {
 		return repo.findById(id).get();
 	}
 	
-	public void updateservice(Integer id,String tittle, String discription, MultipartFile file) throws IOException{
+	public void updateservice(Integer id,String tittle, String discription,String type, MultipartFile file) throws IOException{
 		Optional<Services> serv =repo.findById(id);
 		if (serv.isPresent()) {
 			Services product = serv.get();
 			
 			product.setTittle(tittle);
 			product.setDiscription(discription);
+			product.setType(type);
 			product.setImg(file.getBytes());
 			
 			repo.save(product);
@@ -63,14 +65,14 @@ public class ServicesServ {
 	    }
 	}
 	
-	public void updateservicesWithOutFile(Integer id,String tittle, String discription) throws IOException{
+	public void updateservicesWithOutFile(Integer id,String tittle, String type,String discription) throws IOException{
 		Optional<Services> serv =repo.findById(id);
 		if (serv.isPresent()) {
 			Services product = serv.get();
 			
 			product.setTittle(tittle);
 			product.setDiscription(discription);
-			
+			product.setType(type);
 			repo.save(product);
 		}else {
 	        throw new RuntimeException("product not found with id: " + id);

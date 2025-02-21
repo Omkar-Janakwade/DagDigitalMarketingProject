@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,6 @@ import com.demo.admin.services.Carrer_server;
 
 @RestController
 @CrossOrigin("*")
-
 public class Carrer_contro {
 	
 	@Autowired
@@ -25,22 +25,22 @@ public class Carrer_contro {
 	
 
 
-	@PostMapping("addCarrer")
+	@PostMapping("/addCarrer")
 	public Carrer addCarrer(@RequestBody Carrer carrer) {
 		return server.addCarrer(carrer);
 	}
 	
-	@GetMapping("getallcarrer")
+	@GetMapping("/getallcarrer")
 	public List<Carrer> getallCarrers(){
 		return server.getallcarrer();
 	}
 	
-	@DeleteMapping("deletecarrer/{id}")
+	@DeleteMapping("/deletecarrer/{id}")
 	public void deleteCarrer(@PathVariable Integer id) {
 		 server.deletcarrer(id);
 	}
 	
-	@GetMapping("getCarrerbyid/{id}")
+	@GetMapping("/getCarrerbyid/{id}")
 	public Carrer getCarrerid(@PathVariable Integer id) {
 		return server.getbyId(id);
 	}
@@ -48,5 +48,11 @@ public class Carrer_contro {
 	public long getcount() {
 		return server.getcount();
 	}
+	
+    @PutMapping("/updateCarrer/{id}")
+    public Carrer updateCarrer(@PathVariable Integer id, @RequestBody Carrer updatedCarrer) {
+        return server.updateCarrer(id, updatedCarrer);
+    }
+
 	
 }
